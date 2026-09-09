@@ -530,6 +530,10 @@ body.nav-open .burger span:nth-child(3) { transform: translateY(-8px) rotate(-45
 .card__meta span + span::before { content: "·"; margin: 0 .5em; color: var(--hairline); }
 .card__body p { color: var(--ink-2); font-size: .95rem; }
 .card__body .link-arrow { margin-top: auto; align-self: flex-start; }
+/* La tarjeta entera es un enlace: el "Ver y reservar" reacciona al
+   hover de toda la tarjeta, no solo al de su texto. */
+.card:hover .link-arrow { gap: .82em; color: var(--ink); border-color: var(--ink); }
+.card:hover .link-arrow svg { transform: translateX(3px); }
 
 .feature {
   position: relative; overflow: hidden; min-height: 400px; isolation: isolate;
@@ -709,6 +713,30 @@ body.nav-open .burger span:nth-child(3) { transform: translateY(-8px) rotate(-45
 .steps li.active { color: var(--ink); }
 .steps li.active i { background: var(--sage); border-color: var(--sage); color: #fff; }
 .steps li.done i { background: var(--forest); border-color: var(--forest); color: #fff; }
+/* Los pasos ya completados se pueden pulsar para volver a ellos. */
+.steps__jump {
+  display: inline-flex; align-items: center; gap: 9px;
+  font: inherit; color: inherit; letter-spacing: inherit; text-transform: inherit;
+  padding: 0; cursor: pointer;
+  transition: color .2s var(--ease);
+}
+.steps__jump:hover { color: var(--ink); }
+.steps__jump:hover i { border-color: var(--sage); }
+
+.rate-more { border-top: 1px solid var(--hairline); }
+.rate-more > summary {
+  cursor: pointer; list-style: none;
+  padding: var(--s-4) 0 calc(var(--s-4) - 4px);
+  font-family: var(--font-body); font-size: .72rem; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--sage);
+  display: flex; align-items: center; gap: 8px;
+}
+.rate-more > summary::-webkit-details-marker { display: none; }
+.rate-more > summary::after {
+  content: "+"; margin-left: -2px; font-size: 1.05rem; line-height: 1;
+}
+.rate-more[open] > summary::after { content: "–"; }
+.rate-more[open] > summary { color: var(--ink); }
 
 .wizard-panel { display: none; }
 .wizard-panel.active { display: block; animation: fadeup .45s var(--ease-out); }

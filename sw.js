@@ -2,7 +2,7 @@
    - Navegaciones (HTML): "network-first" — así una página nueva nunca
      queda una carga por detrás; si no hay red, se sirve de caché.
    - Resto de recursos del mismo origen: "stale-while-revalidate". */
-var CACHE = "kaleo-v13";
+var CACHE = "kaleo-v14";
 var CORE = [
   "index.html", "habitaciones.html", "nava.html", "nosotros.html",
   "ofertas.html", "ubicacion.html", "reservar.html", "privacidad.html",

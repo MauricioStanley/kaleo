@@ -75,11 +75,18 @@
 
   function stepper() {
     var labels = ["Fechas", "Habitación", "Extras", "Datos", "Confirmación"];
+    var canJump = state.step < 5;
     return '<ol class="steps" aria-label="Progreso de la reserva">' + labels.map(function (l, i) {
       var n = i + 1;
-      var cls = n === state.step ? "active" : (n < state.step ? "done" : "");
-      var cur = n === state.step ? ' aria-current="step"' : "";
-      return '<li class="' + cls + '"' + cur + '><i>' + (n < state.step ? "✓" : n) + "</i>" + l + "</li>";
+      var done = n < state.step, active = n === state.step;
+      var cls = active ? "active" : (done ? "done" : "");
+      var cur = active ? ' aria-current="step"' : "";
+      var inner = '<i>' + (done ? "✓" : n) + "</i>" + l;
+      if (done && canJump) {
+        inner = '<button type="button" class="steps__jump" data-goto="' + n +
+          '" aria-label="Volver al paso: ' + l + '">' + inner + "</button>";
+      }
+      return '<li class="' + cls + '"' + cur + ">" + inner + "</li>";
     }).join("") + "</ol>";
   }
 
@@ -188,14 +195,24 @@
     var picked = cards.filter(function (c) { return c.id === state.roomId; })[0];
     if (!picked) { state.roomId = cards[0].id; picked = cards[0]; }
     var html = cards.map(function (r) {
-      var rates = D.rateTypes.map(function (rt) {
+      var rateHtml = function (rt) {
         var price = Math.round(r.from * rt.factor);
         var checked = (state.roomId === r.id && state.rateId === rt.id) ? "checked" : "";
         return '<label class="rate-option">' +
           '<span><input type="radio" name="rate" value="' + r.id + "|" + rt.id + '" ' + checked + '> <b>' + rt.name + '</b><br><small>' + rt.note + '</small></span>' +
           '<span class="price"><b>' + money(price) + '</b><br><small>por noche</small></span>' +
         '</label>';
-      }).join("");
+      };
+      /* La tarifa flexible (la más común) siempre visible; las otras dos
+         se despliegan a demanda para no llenar la pantalla de opciones. */
+      var primary = D.rateTypes.filter(function (x) { return x.id === "flex"; });
+      var others = D.rateTypes.filter(function (x) { return x.id !== "flex"; });
+      var otherPicked = (state.roomId === r.id && state.rateId && state.rateId !== "flex");
+      var rates = primary.map(rateHtml).join("") +
+        '<details class="rate-more"' + (otherPicked ? " open" : "") + '>' +
+          '<summary>Ver otras tarifas</summary>' +
+          others.map(rateHtml).join("") +
+        '</details>';
       return '<article class="rate-room' + (r.id === state.roomId ? " rate-room--picked" : "") + '" id="rr-' + r.id + '">' +
         '<img src="' + r.img + '" alt="' + r.name + '" loading="lazy">' +
         '<div class="rate-room__body">' +
@@ -329,6 +346,13 @@
     var next = $("[data-next]"), back = $("[data-back]");
     if (next) next.addEventListener("click", onNext);
     if (back) back.addEventListener("click", function () { state.step--; render(); });
+
+    $$("[data-goto]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var n = +b.getAttribute("data-goto");
+        if (n >= 1 && n < state.step) { state.step = n; render(); }
+      });
+    });
 
     if (state.step === 1) {
       ["w-checkin", "w-checkout", "w-adults", "w-children", "w-rooms", "w-promo"].forEach(function (id) {

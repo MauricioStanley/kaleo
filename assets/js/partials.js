@@ -31,7 +31,10 @@
      siempre visibles) y duplicaba esa acción. */
 
   /* ---------- Botón flotante de WhatsApp ---------- */
-  if (!document.querySelector(".wa-fab")) {
+  /* En el motor de reservas se omite: flotaría sobre los campos del
+     formulario y distrae de una tarea en curso. El paso final ya
+     ofrece un enlace de WhatsApp, y el pie lo mantiene. */
+  if (!document.querySelector(".wa-fab") && !document.getElementById("wizard")) {
     var w = document.createElement("a");
     w.className = "wa-fab";
     w.href = "https://wa.me/" + WA + "?text=" + WA_MSG;

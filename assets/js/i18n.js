@@ -43,6 +43,8 @@
     "Habitaciones": "Rooms",
     "Calificación de huéspedes": "Guest rating",
     "Reseñas verificadas": "Verified reviews",
+    "Minutos a la Zona Rosa": "Minutes to Zona Rosa",
+    "Desde, por noche": "From, per night",
 
     /* --- Home: secciones --- */
     "Tres razones para quedarte": "Three reasons to stay",
@@ -315,6 +317,11 @@
       "We only ask for what's essential to hold your booking.",
     "Confirmar reserva": "Confirm booking",
     "opcional": "optional",
+    "Ver otras tarifas": "See other rates",
+    "Volver al paso: Fechas": "Back to step: Dates",
+    "Volver al paso: Habitación": "Back to step: Room",
+    "Volver al paso: Extras": "Back to step: Extras",
+    "Volver al paso: Datos": "Back to step: Details",
     "Precio indicativo por noche, desde. Toca un día para fijar la entrada.":
       "Indicative price per night, from. Tap a day to set the check-in date.",
     "Mes anterior": "Previous month",
