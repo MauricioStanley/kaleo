@@ -70,6 +70,8 @@
 *, *::before, *::after { box-sizing: border-box; }
 * { margin: 0; }
 html { -webkit-text-size-adjust: 100%; scroll-padding-top: 92px; }
+/* Contiene el menú móvil fuera de pantalla sin romper position:sticky. */
+html { overflow-x: hidden; overflow-x: clip; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {
@@ -796,7 +798,16 @@ body.nav-open .burger span:nth-child(3) { transform: translateY(-8px) rotate(-45
   box-shadow: 0 -1px 0 var(--hairline);
 }
 .mobile-book .btn { width: 100%; }
-@media (max-width: 1040px) { .mobile-book { display: block; } .site-footer { padding-bottom: 90px; } }
+@media (max-width: 1040px) {
+  .mobile-book { display: block; }
+  .site-footer { padding-bottom: 90px; }
+  /* En móvil la reserva vive en .mobile-book; la barra de scroll con
+     selector de fechas no cabe bien y se oculta. */
+  .stickybar { display: none !important; }
+  /* Deja aire para que los botones del hero no queden bajo .mobile-book. */
+  .hero { padding-bottom: calc(clamp(84px, 15vh, 132px) + 72px); }
+  .hero__eyebrow { letter-spacing: .14em; }
+}
 
 /* ---------- Animación de entrada ---------- */
 .reveal { opacity: 0; transform: translateY(20px); transition: opacity .7s var(--ease-out), transform .7s var(--ease-out); transition-delay: calc(var(--i, 0) * 80ms); }
