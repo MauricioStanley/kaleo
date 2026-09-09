@@ -75,10 +75,11 @@
 
   function stepper() {
     var labels = ["Fechas", "Habitación", "Extras", "Datos", "Confirmación"];
-    return '<ol class="steps">' + labels.map(function (l, i) {
+    return '<ol class="steps" aria-label="Progreso de la reserva">' + labels.map(function (l, i) {
       var n = i + 1;
       var cls = n === state.step ? "active" : (n < state.step ? "done" : "");
-      return '<li class="' + cls + '"><i>' + (n < state.step ? "✓" : n) + "</i>" + l + "</li>";
+      var cur = n === state.step ? ' aria-current="step"' : "";
+      return '<li class="' + cls + '"' + cur + '><i>' + (n < state.step ? "✓" : n) + "</i>" + l + "</li>";
     }).join("") + "</ol>";
   }
 
@@ -177,7 +178,8 @@
   function panel2() {
     var n = nights();
     var cards = D.rooms.filter(function (r) { return capacity(r) >= guestCount(); });
-    if (!cards.length) cards = D.rooms;
+    var noneFit = !cards.length;
+    if (noneFit) cards = D.rooms;
     /* Preselección amable: si el huésped llegó desde "Reservar esta
        habitación" (?room=…) o simplemente no ha elegido nada, dejamos
        marcada una opción válida para que "Continuar" funcione de una vez.
@@ -206,9 +208,12 @@
         '</div>' +
       '</article>';
     }).join("");
+    var lead = noneFit
+      ? '<p class="form-error" style="margin:12px 0 6px">Ninguna habitación admite ' + guestCount() + ' huéspedes. Te mostramos todas; para un grupo, vuelve al paso anterior y reserva más de una habitación.</p>'
+      : '<p class="form-note" style="margin:0 0 24px">Dejamos una opción marcada para agilizar; cámbiala si prefieres otra.</p>';
     return '<div class="wizard-panel active"><h2 class="h-md">Elige tu habitación</h2>' +
       '<p class="form-note" style="margin:10px 0 6px">' + dateHuman(state.checkin) + ' – ' + dateHuman(state.checkout) + ' · ' + n + ' noche(s) · ' + guestCount() + ' huésped(es)</p>' +
-      '<p class="form-note" style="margin:0 0 24px">Dejamos una opción marcada para agilizar; cámbiala si prefieres otra.</p>' +
+      lead +
       html +
       '<div class="wizard-nav"><button class="btn btn--ghost" data-back>Volver</button><button class="btn btn--primary" data-next>Continuar</button></div>' +
       '</div>';
@@ -249,7 +254,7 @@
         '<label for="g-notes">Solicitudes especiales <span class="field__opt">opcional</span></label>' +
         '<textarea id="g-notes" placeholder="Habitación al jardín, celebración, alergias…">' + esc(g.notes) + '</textarea>' +
       '</div>' +
-      '<p class="form-error" id="guest-error" hidden></p>' +
+      '<p class="form-error" id="guest-error" role="alert" hidden></p>' +
       '<p class="form-note" style="margin-top:18px">No se requiere pago ahora. La reserva se garantiza con tus datos de contacto y se liquida en el hotel al hacer el check-in. Aplica la política de cancelación de la tarifa elegida.</p>' +
       '<div class="wizard-nav"><button type="button" class="btn btn--ghost" data-back>Volver</button><button type="submit" class="btn btn--primary">Confirmar reserva</button></div>' +
       '</form></div>';
@@ -309,6 +314,13 @@
     bind();
     if (state.step !== lastStep) {
       window.scrollTo({ top: ($(".site-header").offsetHeight || 70), behavior: "smooth" });
+      /* Al cambiar de paso, lleva el foco al título del panel para que
+         quien navega con teclado o lector de pantalla no empiece de nuevo
+         desde arriba de la página. */
+      if (lastStep !== 0) {
+        var h = panels.querySelector("h2");
+        if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); }
+      }
       lastStep = state.step;
     }
   }

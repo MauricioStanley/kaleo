@@ -305,8 +305,16 @@
     "Tarifa": "Rate",
     "Volver al inicio": "Back to home",
     "Nueva reserva": "New booking",
-    "Elige fechas, habitación y extras. No se procesa ningún pago: es una maqueta de demostración.":
-      "Choose dates, room and extras. No payment is processed: this is a demonstration mock-up.",
+    "Elige fechas, habitación y extras en cuatro pasos. El pago se realiza en el hotel.":
+      "Choose dates, room and extras in four steps. Payment is made at the hotel.",
+    "Dejamos una opción marcada para agilizar; cámbiala si prefieres otra.":
+      "We've pre-selected an option to speed things up; change it if you prefer another.",
+    "Todo esto es opcional. Puedes añadirlo ahora o pedirlo al llegar.":
+      "All optional. Add it now or ask for it on arrival.",
+    "Solo pedimos lo imprescindible para garantizar tu reserva.":
+      "We only ask for what's essential to hold your booking.",
+    "Confirmar reserva": "Confirm booking",
+    "opcional": "optional",
     "Precio indicativo por noche, desde. Toca un día para fijar la entrada.":
       "Indicative price per night, from. Tap a day to set the check-in date.",
     "Mes anterior": "Previous month",
