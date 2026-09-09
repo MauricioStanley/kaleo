@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Jardin interior de Kaleo con vegetacion densa y una hamaca">
+  <defs>
+    <linearGradient id="gdBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#41583f"/><stop offset=".5" stop-color="#5c7a57"/><stop offset="1" stop-color="#3a4d38"/>
+    </linearGradient>
+    <radialGradient id="gdLight" cx="62%" cy="30%" r="60%">
+      <stop offset="0" stop-color="#f0e4c8" stop-opacity=".5"/><stop offset="1" stop-color="#f0e4c8" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="gdGrain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope="0.05"/></feComponentTransfer></filter>
+  </defs>
+  <rect width="1600" height="1200" fill="url(#gdBg)"/>
+  <rect width="1600" height="1200" fill="url(#gdLight)"/>
+  <g fill="#33472f"><ellipse cx="300" cy="120" rx="520" ry="340"/><ellipse cx="1350" cy="80" rx="520" ry="360"/><ellipse cx="820" cy="-40" rx="420" ry="260"/></g>
+  <g fill="#2b3b29" opacity=".92"><ellipse cx="140" cy="620" rx="360" ry="440"/><ellipse cx="1480" cy="640" rx="380" ry="460"/></g>
+  <rect x="560" y="300" width="26" height="520" fill="#233523"/>
+  <rect x="1030" y="280" width="30" height="560" fill="#233523"/>
+  <path d="M573 560 C 760 700 900 700 1045 540" stroke="#cdd9c4" stroke-width="12" fill="none"/>
+  <path d="M600 576 C 770 720 890 720 1020 552 C 890 660 770 660 600 576 Z" fill="#b7c7af" opacity=".6"/>
+  <path d="M0 820 Q 420 740 820 800 T 1600 790 V1200 H0 Z" fill="#243324"/>
+  <path d="M0 980 Q 500 920 1000 970 T 1600 960 V1200 H0 Z" fill="#1a231a"/>
+  <g fill="#182018">
+    <path d="M-30 1200 C 140 940 70 800 240 700 C 150 900 260 1060 340 1200 Z"/>
+    <path d="M1630 1200 C 1470 980 1560 820 1400 720 C 1520 920 1420 1080 1330 1200 Z"/>
+    <path d="M720 1200 C 800 1040 760 960 860 900 C 820 1020 900 1120 940 1200 Z"/>
+  </g>
+  <circle cx="1040" cy="360" r="7" fill="#f3e6ca" opacity=".8"/>
+  <circle cx="470" cy="470" r="6" fill="#f3e6ca" opacity=".6"/>
+  <rect width="1600" height="1200" filter="url(#gdGrain)"/>
+</svg>

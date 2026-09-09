@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Habitacion Doble de Kaleo con dos camas individuales">
+  <defs>
+    <linearGradient id="r2Wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eee7d7"/><stop offset="1" stop-color="#ddd4bf"/></linearGradient>
+    <linearGradient id="r2Floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c8b699"/><stop offset="1" stop-color="#9f8b6b"/></linearGradient>
+    <linearGradient id="r2Win" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a6bd9f"/><stop offset="1" stop-color="#5f7d59"/></linearGradient>
+    <radialGradient id="r2Glow" cx="50%" cy="0%" r="90%"><stop offset="0" stop-color="#f6ecd2" stop-opacity=".7"/><stop offset="1" stop-color="#f6ecd2" stop-opacity="0"/></radialGradient>
+    <filter id="r2Grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope="0.05"/></feComponentTransfer></filter>
+  </defs>
+  <rect width="1600" height="1200" fill="url(#r2Wall)"/>
+  <rect x="0" y="850" width="1600" height="350" fill="url(#r2Floor)"/>
+  <rect x="0" y="845" width="1600" height="10" fill="#8d7a5b"/>
+  <rect x="120" y="170" width="360" height="470" fill="url(#r2Win)"/>
+  <rect x="120" y="170" width="360" height="470" fill="none" stroke="#cec5ad" stroke-width="16"/>
+  <line x1="300" y1="170" x2="300" y2="640" stroke="#cec5ad" stroke-width="10"/>
+  <rect x="120" y="170" width="360" height="470" fill="url(#r2Glow)"/>
+  <!-- twin bed A -->
+  <g>
+    <rect x="150" y="470" width="440" height="150" rx="10" fill="#c3b291"/>
+    <rect x="130" y="610" width="480" height="200" fill="#f3efe4"/>
+    <path d="M130 610 h480 v56 q-240 30 -480 0 z" fill="#e6dfce"/>
+    <rect x="150" y="666" width="230" height="70" rx="10" fill="#dbd3bf"/>
+    <rect x="130" y="800" width="480" height="22" fill="#8d7a5b"/>
+  </g>
+  <!-- twin bed B -->
+  <g>
+    <rect x="700" y="470" width="440" height="150" rx="10" fill="#c3b291"/>
+    <rect x="680" y="610" width="480" height="200" fill="#f3efe4"/>
+    <path d="M680 610 h480 v56 q-240 30 -480 0 z" fill="#e6dfce"/>
+    <rect x="700" y="666" width="230" height="70" rx="10" fill="#dbd3bf"/>
+    <rect x="680" y="800" width="480" height="22" fill="#8d7a5b"/>
+  </g>
+  <!-- shared nightstand + lamp between -->
+  <rect x="616" y="690" width="70" height="120" fill="#7d6a51"/>
+  <path d="M636 620 l30 0 12 70 -54 0 z" fill="#e9dcc0"/>
+  <circle cx="651" cy="650" r="70" fill="#f4ecd6" opacity=".3"/>
+  <!-- plant + light pool -->
+  <g fill="#33472f"><ellipse cx="1300" cy="740" rx="100" ry="140"/><rect x="1266" y="810" width="66" height="80" fill="#6f5e46"/></g>
+  <ellipse cx="420" cy="940" rx="260" ry="55" fill="#f4ead0" opacity=".38"/>
+  <rect width="1600" height="1200" filter="url(#r2Grain)"/>
+</svg>

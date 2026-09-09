@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Paneles solares y plantas en la azotea de Kaleo">
+  <defs>
+    <linearGradient id="soSky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9fb799"/><stop offset=".55" stop-color="#cdd9c6"/><stop offset="1" stop-color="#e9ece0"/>
+    </linearGradient>
+    <linearGradient id="soPanel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2b3b47"/><stop offset=".5" stop-color="#3d5563"/><stop offset="1" stop-color="#243139"/>
+    </linearGradient>
+    <linearGradient id="soRoof" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c7c1ad"/><stop offset="1" stop-color="#a49a80"/>
+    </linearGradient>
+    <filter id="soGrain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope="0.05"/></feComponentTransfer></filter>
+  </defs>
+  <rect width="1600" height="1200" fill="url(#soSky)"/>
+  <circle cx="1300" cy="240" r="90" fill="#f4e7cc" opacity=".85"/>
+  <rect x="0" y="620" width="1600" height="580" fill="url(#soRoof)"/>
+  <rect x="0" y="620" width="1600" height="16" fill="#d8d2bd"/>
+  <!-- panel rows -->
+  <g>
+    <g transform="translate(120 560)">
+      <path d="M0 120 L560 60 L560 150 L0 210 Z" fill="url(#soPanel)"/>
+      <g stroke="#8aa0ad" stroke-width="3" opacity=".7">
+        <path d="M140 106 L140 194"/><path d="M280 92 L280 180"/><path d="M420 78 L420 166"/>
+        <path d="M0 165 L560 105"/>
+      </g>
+      <rect x="60" y="205" width="10" height="70" fill="#5c6350"/>
+      <rect x="480" y="150" width="10" height="70" fill="#5c6350"/>
+    </g>
+    <g transform="translate(820 560)">
+      <path d="M0 120 L560 60 L560 150 L0 210 Z" fill="url(#soPanel)"/>
+      <g stroke="#8aa0ad" stroke-width="3" opacity=".7">
+        <path d="M140 106 L140 194"/><path d="M280 92 L280 180"/><path d="M420 78 L420 166"/>
+        <path d="M0 165 L560 105"/>
+      </g>
+      <rect x="60" y="205" width="10" height="70" fill="#5c6350"/>
+      <rect x="480" y="150" width="10" height="70" fill="#5c6350"/>
+    </g>
+    <g transform="translate(430 760)">
+      <path d="M0 120 L620 46 L620 150 L0 224 Z" fill="url(#soPanel)"/>
+      <g stroke="#8aa0ad" stroke-width="3" opacity=".7"><path d="M160 100 L160 200"/><path d="M320 80 L320 180"/><path d="M480 60 L480 160"/><path d="M0 172 L620 98"/></g>
+    </g>
+  </g>
+  <!-- glint -->
+  <path d="M300 600 l60 -8 -30 40 z" fill="#eef3f5" opacity=".8"/>
+  <!-- rooftop plants -->
+  <g fill="#33472f"><ellipse cx="90" cy="600" rx="80" ry="62"/><rect x="66" y="606" width="48" height="70" fill="#7c6a53"/></g>
+  <g fill="#33472f"><ellipse cx="1520" cy="608" rx="70" ry="56"/><rect x="1500" y="614" width="44" height="66" fill="#7c6a53"/></g>
+  <rect width="1600" height="1200" filter="url(#soGrain)"/>
+</svg>

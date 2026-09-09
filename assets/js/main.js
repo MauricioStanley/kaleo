@@ -5,6 +5,10 @@
 (function () {
   "use strict";
 
+  /* Marca "JS activo": las animaciones que ocultan contenido por defecto
+     (entrada del hero) solo se aplican si esto llega a ejecutarse. */
+  document.documentElement.classList.add("js");
+
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var $ = function (s, c) { return (c || document).querySelector(s); };
   var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };

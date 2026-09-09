@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Habitacion Sencilla de Kaleo con cama Queen y luz natural">
+  <defs>
+    <linearGradient id="r1Wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#efe8d8"/><stop offset="1" stop-color="#ded5c0"/></linearGradient>
+    <linearGradient id="r1Floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c9b79a"/><stop offset="1" stop-color="#a08c6c"/></linearGradient>
+    <linearGradient id="r1Win" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a6bd9f"/><stop offset="1" stop-color="#5f7d59"/></linearGradient>
+    <radialGradient id="r1Glow" cx="50%" cy="0%" r="90%"><stop offset="0" stop-color="#f6ecd2" stop-opacity=".7"/><stop offset="1" stop-color="#f6ecd2" stop-opacity="0"/></radialGradient>
+    <filter id="r1Grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope="0.05"/></feComponentTransfer></filter>
+  </defs>
+  <rect width="1600" height="1200" fill="url(#r1Wall)"/>
+  <rect x="0" y="840" width="1600" height="360" fill="url(#r1Floor)"/>
+  <rect x="0" y="835" width="1600" height="10" fill="#8f7c5d"/>
+  <!-- window -->
+  <rect x="1140" y="180" width="380" height="520" fill="url(#r1Win)"/>
+  <rect x="1140" y="180" width="380" height="520" fill="none" stroke="#cec5ad" stroke-width="16"/>
+  <line x1="1330" y1="180" x2="1330" y2="700" stroke="#cec5ad" stroke-width="10"/>
+  <rect x="1140" y="180" width="380" height="520" fill="url(#r1Glow)"/>
+  <!-- headboard + bed -->
+  <rect x="150" y="430" width="620" height="210" rx="12" fill="#c3b291"/>
+  <rect x="120" y="620" width="700" height="230" fill="#f3efe4"/>
+  <path d="M120 620 h700 v70 q-350 40 -700 0 z" fill="#e7e0cf"/>
+  <rect x="140" y="700" width="360" height="90" rx="10" fill="#dcd4c0"/>
+  <rect x="120" y="840" width="700" height="24" fill="#8f7c5d"/>
+  <!-- nightstand + lamp -->
+  <rect x="840" y="700" width="150" height="150" fill="#7d6a51"/>
+  <path d="M905 610 l40 0 18 90 -76 0 z" fill="#e9dcc0"/>
+  <circle cx="924" cy="650" r="80" fill="#f4ecd6" opacity=".35"/>
+  <!-- plant + light pool -->
+  <g fill="#33472f"><ellipse cx="1030" cy="770" rx="90" ry="120"/><rect x="1000" y="830" width="60" height="70" fill="#6f5e46"/></g>
+  <ellipse cx="1230" cy="930" rx="240" ry="55" fill="#f4ead0" opacity=".4"/>
+  <rect width="1600" height="1200" filter="url(#r1Grain)"/>
+</svg>

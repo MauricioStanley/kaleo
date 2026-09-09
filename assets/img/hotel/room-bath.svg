@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Bano privado de Kaleo con ducha de lluvia, tina y espejo redondo">
+  <defs>
+    <linearGradient id="baWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9e6d9"/><stop offset="1" stop-color="#d5d1c0"/></linearGradient>
+    <linearGradient id="baFloor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c3b7a2"/><stop offset="1" stop-color="#9a8f79"/></linearGradient>
+    <linearGradient id="baWin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#aec3a6"/><stop offset="1" stop-color="#5f7d59"/></linearGradient>
+    <radialGradient id="baGlow" cx="80%" cy="8%" r="90%"><stop offset="0" stop-color="#f6ecd2" stop-opacity=".65"/><stop offset="1" stop-color="#f6ecd2" stop-opacity="0"/></radialGradient>
+    <filter id="baGrain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope="0.05"/></feComponentTransfer></filter>
+  </defs>
+  <rect width="1600" height="1200" fill="url(#baWall)"/>
+  <!-- tile grid -->
+  <g stroke="#dcd8c7" stroke-width="3" opacity=".8">
+    <path d="M0 300 H1600"/><path d="M0 470 H1600"/><path d="M0 640 H1600"/>
+    <path d="M300 130 V820"/><path d="M600 130 V820"/><path d="M900 130 V820"/>
+  </g>
+  <rect x="0" y="820" width="1600" height="380" fill="url(#baFloor)"/>
+  <rect x="0" y="815" width="1600" height="10" fill="#8b8067"/>
+  <!-- window -->
+  <rect x="1180" y="170" width="330" height="430" fill="url(#baWin)"/>
+  <rect x="1180" y="170" width="330" height="430" fill="none" stroke="#cec5ad" stroke-width="16"/>
+  <rect x="1180" y="170" width="330" height="430" fill="url(#baGlow)"/>
+  <!-- freestanding tub -->
+  <path d="M150 760 q0 -120 130 -130 h260 q130 10 130 130 q0 130 -130 150 h-260 q-130 -20 -130 -150 z" fill="#f3efe6"/>
+  <path d="M180 760 q0 -96 110 -104 h240 q110 8 110 104 q0 100 -110 118 h-240 q-110 -18 -110 -118 z" fill="#e2ddca"/>
+  <rect x="250" y="905" width="16" height="60" fill="#7d7358"/>
+  <rect x="520" y="905" width="16" height="60" fill="#7d7358"/>
+  <!-- faucet -->
+  <path d="M120 700 q-40 -60 0 -110" stroke="#8a8068" stroke-width="12" fill="none"/>
+  <!-- vanity + round mirror -->
+  <rect x="820" y="640" width="300" height="180" fill="#7d6a51"/>
+  <rect x="820" y="640" width="300" height="24" fill="#8f7c5d"/>
+  <ellipse cx="970" cy="700" rx="70" ry="24" fill="#dfeaf0"/>
+  <circle cx="970" cy="420" r="110" fill="none" stroke="#8a8068" stroke-width="14"/>
+  <circle cx="970" cy="420" r="103" fill="#d8e2e6" opacity=".7"/>
+  <!-- rain shower head -->
+  <rect x="1060" y="150" width="6" height="120" fill="#8a8068"/>
+  <rect x="1010" y="150" width="120" height="14" rx="6" fill="#8a8068"/>
+  <g stroke="#cfe0e6" stroke-width="3" opacity=".7"><path d="M1030 168 V260"/><path d="M1070 168 V280"/><path d="M1110 168 V255"/></g>
+  <!-- plant + light pool -->
+  <g fill="#33472f"><ellipse cx="1250" cy="720" rx="80" ry="110"/><rect x="1222" y="780" width="56" height="70" fill="#6f5e46"/></g>
+  <ellipse cx="470" cy="1010" rx="300" ry="55" fill="#f4ead0" opacity=".36"/>
+  <rect width="1600" height="1200" filter="url(#baGrain)"/>
+</svg>

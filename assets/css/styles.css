@@ -381,14 +381,16 @@ body.nav-open .burger span:nth-child(3) { transform: translateY(-8px) rotate(-45
 }
 .hero__cta { margin-top: 32px; display: flex; gap: 16px; flex-wrap: wrap; }
 
-/* Entrada escalonada del hero al cargar */
+/* Entrada escalonada del hero al cargar.
+   Solo con JS activo (html.js): si el script no corre, el contenido
+   se muestra de inmediato en vez de quedarse invisible. */
 @media (prefers-reduced-motion: no-preference) {
-  .hero__inner > * { opacity: 0; transform: translateY(22px); animation: heroIn .9s var(--ease-out) forwards; }
-  .hero__inner > :nth-child(1) { animation-delay: .12s; }
-  .hero__inner > :nth-child(2) { animation-delay: .22s; }
-  .hero__inner > :nth-child(3) { animation-delay: .34s; }
-  .hero__inner > :nth-child(4) { animation-delay: .46s; }
-  .hero__scroll { opacity: 0; animation: heroIn .9s var(--ease-out) .8s forwards; }
+  :root.js .hero__inner > * { opacity: 0; transform: translateY(22px); animation: heroIn .9s var(--ease-out) forwards; }
+  :root.js .hero__inner > :nth-child(1) { animation-delay: .12s; }
+  :root.js .hero__inner > :nth-child(2) { animation-delay: .22s; }
+  :root.js .hero__inner > :nth-child(3) { animation-delay: .34s; }
+  :root.js .hero__inner > :nth-child(4) { animation-delay: .46s; }
+  :root.js .hero__scroll { opacity: 0; animation: heroIn .9s var(--ease-out) .8s forwards; }
 }
 @keyframes heroIn { to { opacity: 1; transform: none; } }
 .hero::after {

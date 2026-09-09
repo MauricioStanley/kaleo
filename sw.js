@@ -1,6 +1,8 @@
-/* Service worker — caché básico para carga instantánea y uso sin conexión.
-   Estrategia: "stale-while-revalidate" para todo lo del mismo origen. */
-var CACHE = "kaleo-v2";
+/* Service worker — caché para carga instantánea y uso sin conexión.
+   - Navegaciones (HTML): "network-first" — así una página nueva nunca
+     queda una carga por detrás; si no hay red, se sirve de caché.
+   - Resto de recursos del mismo origen: "stale-while-revalidate". */
+var CACHE = "kaleo-v4";
 var CORE = [
   "index.html", "habitaciones.html", "nava.html", "nosotros.html",
   "ofertas.html", "ubicacion.html", "reservar.html", "privacidad.html",
@@ -30,6 +32,25 @@ self.addEventListener("fetch", function (e) {
   if (req.method !== "GET") return;
   var url = new URL(req.url);
   if (url.origin !== location.origin) return; // no interceptar Google Maps/Fonts
+
+  var isHTML = req.mode === "navigate" ||
+    (req.headers.get("accept") || "").indexOf("text/html") > -1;
+
+  if (isHTML) {
+    e.respondWith(
+      fetch(req).then(function (res) {
+        if (res && res.status === 200) {
+          var copy = res.clone();
+          caches.open(CACHE).then(function (c) { c.put(req, copy); });
+        }
+        return res;
+      }).catch(function () {
+        return caches.match(req).then(function (c) { return c || caches.match("index.html"); });
+      })
+    );
+    return;
+  }
+
   e.respondWith(
     caches.open(CACHE).then(function (cache) {
       return cache.match(req).then(function (cached) {
