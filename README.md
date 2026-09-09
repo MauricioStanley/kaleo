@@ -54,7 +54,7 @@ manifest.json / sw.js  PWA: instalable y con carga sin conexión
 
 ## Antes de publicarlo como sitio oficial
 
-- **Imágenes:** las de `assets/img/hotel/` son **provisionales** (bloques de color etiquetados). Sustituir por fotografía real: fachada, jardín, sun terrace, cada categoría de habitación, restaurante Nava, cafetería y paneles solares.
+- **Imágenes:** las de `assets/img/hotel/` son fotos reales del sitio del hotel (`hotelkaleo.com`), reencodadas para web, usadas de forma provisional durante la maqueta. Falta material propio de: fachada / calle, restaurante Nava en servicio y paneles solares (`solar.svg` sigue siendo una ilustración porque no hay foto). Sustituir por una sesión fotográfica definitiva antes de publicar.
 - **Datos a confirmar con el hotel:** número exacto de habitaciones (la maqueta usa 12), carta y horarios de Nava y de la cafetería, tarifas, detalles y cifras de sostenibilidad (paneles, consumo), política de mascotas, coordenadas exactas del mapa.
 - **Reseñas y calificación** de la portada son de ejemplo.
 - El **calendario de precios** del motor de reservas se calcula (temporada / fin de semana); no refleja disponibilidad real.
