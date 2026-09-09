@@ -178,6 +178,13 @@
     var n = nights();
     var cards = D.rooms.filter(function (r) { return capacity(r) >= guestCount(); });
     if (!cards.length) cards = D.rooms;
+    /* Preselección amable: si el huésped llegó desde "Reservar esta
+       habitación" (?room=…) o simplemente no ha elegido nada, dejamos
+       marcada una opción válida para que "Continuar" funcione de una vez.
+       Siempre puede cambiarla. */
+    if (!state.rateId) state.rateId = "flex";
+    var picked = cards.filter(function (c) { return c.id === state.roomId; })[0];
+    if (!picked) { state.roomId = cards[0].id; picked = cards[0]; }
     var html = cards.map(function (r) {
       var rates = D.rateTypes.map(function (rt) {
         var price = Math.round(r.from * rt.factor);
@@ -187,7 +194,7 @@
           '<span class="price"><b>' + money(price) + '</b><br><small>por noche</small></span>' +
         '</label>';
       }).join("");
-      return '<article class="rate-room">' +
+      return '<article class="rate-room' + (r.id === state.roomId ? " rate-room--picked" : "") + '" id="rr-' + r.id + '">' +
         '<img src="' + r.img + '" alt="' + r.name + '" loading="lazy">' +
         '<div class="rate-room__body">' +
           '<h3>' + r.name + '</h3>' +
@@ -200,7 +207,8 @@
       '</article>';
     }).join("");
     return '<div class="wizard-panel active"><h2 class="h-md">Elige tu habitación</h2>' +
-      '<p class="form-note" style="margin:10px 0 24px">' + dateHuman(state.checkin) + ' – ' + dateHuman(state.checkout) + ' · ' + n + ' noche(s) · ' + guestCount() + ' huésped(es)</p>' +
+      '<p class="form-note" style="margin:10px 0 6px">' + dateHuman(state.checkin) + ' – ' + dateHuman(state.checkout) + ' · ' + n + ' noche(s) · ' + guestCount() + ' huésped(es)</p>' +
+      '<p class="form-note" style="margin:0 0 24px">Dejamos una opción marcada para agilizar; cámbiala si prefieres otra.</p>' +
       html +
       '<div class="wizard-nav"><button class="btn btn--ghost" data-back>Volver</button><button class="btn btn--primary" data-next>Continuar</button></div>' +
       '</div>';
@@ -216,29 +224,34 @@
         '<span>' + a.note + '</span></span>' +
       '</label>';
     }).join("");
-    return '<div class="wizard-panel active"><h2 class="h-md">Personaliza tu estancia</h2><hr class="leafbar" style="margin:18px 0 24px">' +
+    return '<div class="wizard-panel active"><h2 class="h-md">Personaliza tu estancia</h2>' +
+      '<p class="form-note" style="margin:10px 0 0">Todo esto es opcional. Puedes añadirlo ahora o pedirlo al llegar.</p>' +
+      '<hr class="leafbar" style="margin:16px 0 24px">' +
       '<div style="border:1px solid var(--hairline);border-radius:var(--r);padding:0 18px">' + list + '</div>' +
-      '<div class="wizard-nav"><button class="btn btn--ghost" data-back>Volver</button><button class="btn btn--primary" data-next>Datos del huésped</button></div>' +
+      '<div class="wizard-nav"><button class="btn btn--ghost" data-back>Volver</button><button class="btn btn--primary" data-next>Continuar</button></div>' +
       '</div>';
   }
 
   function panel4() {
     var g = state.guest;
-    return '<div class="wizard-panel active"><h2 class="h-md">Datos del huésped</h2><hr class="leafbar" style="margin:18px 0 28px">' +
+    return '<div class="wizard-panel active"><h2 class="h-md">Datos del huésped</h2>' +
+      '<p class="form-note" style="margin:10px 0 0">Solo pedimos lo imprescindible para garantizar tu reserva.</p>' +
+      '<hr class="leafbar" style="margin:16px 0 28px">' +
       '<form id="guest-form" novalidate><div class="form-grid">' +
-        field("Nombre", '<input type="text" id="g-first" value="' + esc(g.first) + '" required>') +
-        field("Apellido", '<input type="text" id="g-last" value="' + esc(g.last) + '" required>') +
-        field("Correo electrónico", '<input type="email" id="g-email" value="' + esc(g.email) + '" required>') +
-        field("Teléfono", '<input type="tel" id="g-phone" value="' + esc(g.phone) + '" required>') +
-        field("País de residencia", '<input type="text" id="g-country" value="' + esc(g.country) + '">') +
-        field("Hora estimada de llegada", numSelectHours("g-eta", g.eta)) +
+        field("Nombre", '<input type="text" id="g-first" autocomplete="given-name" value="' + esc(g.first) + '" required>') +
+        field("Apellido", '<input type="text" id="g-last" autocomplete="family-name" value="' + esc(g.last) + '" required>') +
+        field("Correo electrónico", '<input type="email" id="g-email" autocomplete="email" inputmode="email" value="' + esc(g.email) + '" required>') +
+        field("Teléfono", '<input type="tel" id="g-phone" autocomplete="tel" value="' + esc(g.phone) + '" required>') +
+        field("País de residencia <span class='field__opt'>opcional</span>", '<input type="text" id="g-country" autocomplete="country-name" value="' + esc(g.country) + '">') +
+        field("Hora estimada de llegada <span class='field__opt'>opcional</span>", numSelectHours("g-eta", g.eta)) +
       '</div>' +
       '<div class="field" style="margin-top:20px">' +
-        '<label for="g-notes">Solicitudes especiales</label>' +
+        '<label for="g-notes">Solicitudes especiales <span class="field__opt">opcional</span></label>' +
         '<textarea id="g-notes" placeholder="Habitación al jardín, celebración, alergias…">' + esc(g.notes) + '</textarea>' +
       '</div>' +
+      '<p class="form-error" id="guest-error" hidden></p>' +
       '<p class="form-note" style="margin-top:18px">No se requiere pago ahora. La reserva se garantiza con tus datos de contacto y se liquida en el hotel al hacer el check-in. Aplica la política de cancelación de la tarifa elegida.</p>' +
-      '<div class="wizard-nav"><button type="button" class="btn btn--ghost" data-back>Volver</button><button type="submit" class="btn btn--primary">Revisar y confirmar</button></div>' +
+      '<div class="wizard-nav"><button type="button" class="btn btn--ghost" data-back>Volver</button><button type="submit" class="btn btn--primary">Confirmar reserva</button></div>' +
       '</form></div>';
   }
 
@@ -260,7 +273,9 @@
           row("Salida", dateHuman(state.checkout)) +
           '<div class="summary__row total"><span>Total estimado</span><b>' + money(grandTotal()) + '</b></div>' +
         '</div>' +
-        '<div class="wizard-nav" style="justify-content:center;margin-top:32px"><a class="btn btn--ghost" href="index.html">Volver al inicio</a><a class="btn btn--primary" href="reservar.html">Nueva reserva</a></div>' +
+        '<p class="form-note" style="max-width:420px;margin:22px auto 0">Te enviaremos la confirmación por correo. El pago se realiza en el hotel al llegar. ' +
+          '¿Necesitas cambiar algo? <a href="https://wa.me/50376057844" target="_blank" rel="noopener">Escríbenos por WhatsApp</a>.</p>' +
+        '<div class="wizard-nav" style="justify-content:center;margin-top:28px"><a class="btn btn--ghost" href="index.html">Volver al inicio</a><a class="btn btn--primary" href="reservar.html">Nueva reserva</a></div>' +
       '</div>' +
     '</div>';
   }
@@ -331,9 +346,15 @@
         r.addEventListener("change", function () {
           var v = r.value.split("|");
           state.roomId = v[0]; state.rateId = v[1];
+          $$(".rate-room").forEach(function (el) {
+            el.classList.toggle("rate-room--picked", el.id === "rr-" + state.roomId);
+          });
           $("#wizard-summary").innerHTML = summary();
         });
       });
+      // marca visible la opción preseleccionada
+      var pre = $('input[name="rate"][value="' + state.roomId + "|" + state.rateId + '"]');
+      if (pre) pre.checked = true;
     }
     if (state.step === 3) {
       $$("[data-addon]").forEach(function (c) {
@@ -344,14 +365,41 @@
       });
     }
     if (state.step === 4) {
-      $("#guest-form").addEventListener("submit", function (e) {
+      var form = $("#guest-form");
+      var errBox = $("#guest-error");
+      var clearErr = function () {
+        $$(".field--error", form).forEach(function (f) { f.classList.remove("field--error"); });
+        if (errBox) { errBox.hidden = true; errBox.textContent = ""; }
+      };
+      $$("#guest-form input, #guest-form select, #guest-form textarea").forEach(function (el) {
+        el.addEventListener("input", function () {
+          var wrap = el.closest(".field");
+          if (wrap) wrap.classList.remove("field--error");
+        });
+      });
+      form.addEventListener("submit", function (e) {
         e.preventDefault();
         state.guest = {
           first: val("g-first"), last: val("g-last"), email: val("g-email"),
           phone: val("g-phone"), country: val("g-country"), eta: val("g-eta"), notes: val("g-notes"),
         };
-        if (!state.guest.first || !state.guest.last || !state.guest.email || !state.guest.phone) {
-          alert("Por favor completa nombre, apellido, correo y teléfono.");
+        clearErr();
+        var missing = [];
+        if (!state.guest.first) missing.push("g-first");
+        if (!state.guest.last) missing.push("g-last");
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(state.guest.email)) missing.push("g-email");
+        if (state.guest.phone.replace(/[^\d]/g, "").length < 6) missing.push("g-phone");
+        if (missing.length) {
+          missing.forEach(function (id) {
+            var w = $("#" + id) && $("#" + id).closest(".field");
+            if (w) w.classList.add("field--error");
+          });
+          if (errBox) {
+            errBox.textContent = "Revisa los campos marcados: necesitamos un nombre, un correo y un teléfono válidos.";
+            errBox.hidden = false;
+          }
+          var firstEl = $("#" + missing[0]);
+          if (firstEl) { firstEl.focus(); firstEl.scrollIntoView({ behavior: "smooth", block: "center" }); }
           return;
         }
         state.step = 5; render();

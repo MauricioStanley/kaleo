@@ -51,14 +51,17 @@
     <div class="section-head">
       <p class="lede">Doce habitaciones alrededor del jardín. Elige por cama y espacio; todas comparten el mismo estándar de descanso y el desayuno en Nava incluido en la tarifa flexible.</p>
     </div>
-    <div id="rooms"></div>
 
-    <div class="center" style="margin:8px 0 40px">
-      <button class="btn btn--ghost" data-compare-toggle data-show="Comparar todas las habitaciones" data-hide="Ocultar comparación">Comparar todas las habitaciones</button>
+    <nav class="room-nav" id="room-nav" aria-label="Ir a una habitación"></nav>
+
+    <div class="center" style="margin:0 0 44px">
+      <button class="btn btn--ghost btn--sm" data-compare-toggle data-show="Comparar todas las habitaciones" data-hide="Ocultar comparación">Comparar todas las habitaciones</button>
     </div>
-    <div id="compare-panel" hidden>
+    <div id="compare-panel" hidden style="margin-bottom:clamp(48px,9vh,90px)">
       <div class="compare-wrap"><table class="compare" id="compare-table"></table></div>
     </div>
+
+    <div id="rooms"></div>
   </div>
 </section>
 
@@ -102,6 +105,13 @@
       '</div>' +
     '</div>';
   }).join("");
+
+  var nav = document.getElementById("room-nav");
+  if (nav) {
+    nav.innerHTML = D.rooms.map(function (r) {
+      return '<a href="#' + r.id + '"><b>' + r.name.replace(/^Habitación\s+/, "") + '</b><span>desde $' + r.from + '</span></a>';
+    }).join("");
+  }
 
   var t = document.getElementById("compare-table");
   var rows = [
