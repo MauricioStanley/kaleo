@@ -11,16 +11,23 @@
   var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
   var money = function (n) { return "$" + n.toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 0 }); };
 
+  /* --- Sanitizado de entrada (los parámetros de la URL no son de fiar) --- */
+  var ENT = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
+  var esc = function (s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return ENT[c]; }); };
+  var isoDate = function (s) { return /^\d{4}-\d{2}-\d{2}$/.test(s || "") ? s : ""; };
+  var clampInt = function (v, lo, hi, def) { v = parseInt(v, 10); return isFinite(v) ? Math.min(hi, Math.max(lo, v)) : def; };
+  var knownRoom = function (r) { return D.rooms.some(function (x) { return x.id === r; }) ? r : null; };
+
   var params = new URLSearchParams(location.search);
   var state = {
     step: 1,
-    checkin: params.get("checkin") || "",
-    checkout: params.get("checkout") || "",
-    adults: +(params.get("adults") || 2),
-    children: +(params.get("children") || 0),
-    rooms: +(params.get("rooms") || 1),
-    promo: params.get("promo") || "",
-    roomId: params.get("room") || null,
+    checkin: isoDate(params.get("checkin")),
+    checkout: isoDate(params.get("checkout")),
+    adults: clampInt(params.get("adults"), 1, 6, 2),
+    children: clampInt(params.get("children"), 0, 4, 0),
+    rooms: clampInt(params.get("rooms"), 1, 4, 1),
+    promo: (params.get("promo") || "").slice(0, 40),
+    roomId: knownRoom(params.get("room")),
     rateId: null,
     addons: {},
     guest: {},
@@ -154,12 +161,12 @@
     return '' +
       '<div class="wizard-panel active"><h2 class="h-md">Fechas y huéspedes</h2><hr class="leafbar" style="margin:18px 0 28px">' +
       '<div class="form-grid">' +
-        field("Entrada", '<input type="date" id="w-checkin" value="' + state.checkin + '">') +
-        field("Salida", '<input type="date" id="w-checkout" value="' + state.checkout + '">') +
+        field("Entrada", '<input type="date" id="w-checkin" value="' + esc(state.checkin) + '">') +
+        field("Salida", '<input type="date" id="w-checkout" value="' + esc(state.checkout) + '">') +
         field("Adultos", numSelect("w-adults", 1, 6, state.adults)) +
         field("Niños", numSelect("w-children", 0, 4, state.children)) +
         field("Habitaciones", numSelect("w-rooms", 1, 4, state.rooms)) +
-        field("Código promocional", '<input type="text" id="w-promo" value="' + state.promo + '" placeholder="Opcional">') +
+        field("Código promocional", '<input type="text" id="w-promo" value="' + esc(state.promo) + '" placeholder="Opcional">') +
       '</div>' +
       '<div style="margin-top:26px">' + rateCal() + '</div>' +
       '<p class="form-note" style="margin-top:18px">Mejor tarifa garantizada al reservar directo. Precios en USD; el IVA se calcula en el paso final.</p>' +
@@ -219,16 +226,16 @@
     var g = state.guest;
     return '<div class="wizard-panel active"><h2 class="h-md">Datos del huésped</h2><hr class="leafbar" style="margin:18px 0 28px">' +
       '<form id="guest-form" novalidate><div class="form-grid">' +
-        field("Nombre", '<input type="text" id="g-first" value="' + (g.first || "") + '" required>') +
-        field("Apellido", '<input type="text" id="g-last" value="' + (g.last || "") + '" required>') +
-        field("Correo electrónico", '<input type="email" id="g-email" value="' + (g.email || "") + '" required>') +
-        field("Teléfono", '<input type="tel" id="g-phone" value="' + (g.phone || "") + '" required>') +
-        field("País de residencia", '<input type="text" id="g-country" value="' + (g.country || "") + '">') +
+        field("Nombre", '<input type="text" id="g-first" value="' + esc(g.first) + '" required>') +
+        field("Apellido", '<input type="text" id="g-last" value="' + esc(g.last) + '" required>') +
+        field("Correo electrónico", '<input type="email" id="g-email" value="' + esc(g.email) + '" required>') +
+        field("Teléfono", '<input type="tel" id="g-phone" value="' + esc(g.phone) + '" required>') +
+        field("País de residencia", '<input type="text" id="g-country" value="' + esc(g.country) + '">') +
         field("Hora estimada de llegada", numSelectHours("g-eta", g.eta)) +
       '</div>' +
       '<div class="field" style="margin-top:20px">' +
         '<label for="g-notes">Solicitudes especiales</label>' +
-        '<textarea id="g-notes" placeholder="Habitación al jardín, celebración, alergias…">' + (g.notes || "") + '</textarea>' +
+        '<textarea id="g-notes" placeholder="Habitación al jardín, celebración, alergias…">' + esc(g.notes) + '</textarea>' +
       '</div>' +
       '<p class="form-note" style="margin-top:18px">No se requiere pago ahora. La reserva se garantiza con tus datos de contacto y se liquida en el hotel al hacer el check-in. Aplica la política de cancelación de la tarifa elegida.</p>' +
       '<div class="wizard-nav"><button type="button" class="btn btn--ghost" data-back>Volver</button><button type="submit" class="btn btn--primary">Revisar y confirmar</button></div>' +
@@ -242,11 +249,11 @@
       '<div class="confirm-box">' +
         '<div class="tick">✓</div>' +
         '<h2 class="h-md">Reserva confirmada</h2>' +
-        '<p class="lede" style="margin:10px auto 18px">Hemos enviado los detalles a ' + (g.email || "tu correo") + '.</p>' +
+        '<p class="lede" style="margin:10px auto 18px">Hemos enviado los detalles a ' + esc(g.email || "tu correo") + '.</p>' +
         '<p style="font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);font-weight:700;margin-bottom:4px">Código de reserva</p>' +
         '<p class="code">' + code + '</p>' +
         '<div style="max-width:420px;margin:26px auto 0;text-align:left">' +
-          row("Huésped", (g.first || "") + " " + (g.last || "")) +
+          row("Huésped", esc((g.first || "") + " " + (g.last || ""))) +
           row("Habitación", r ? r.name : "") +
           row("Tarifa", rt ? rt.name : "") +
           row("Entrada", dateHuman(state.checkin)) +

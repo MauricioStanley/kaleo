@@ -1,6 +1,6 @@
 /* Service worker — caché básico para carga instantánea y uso sin conexión.
    Estrategia: "stale-while-revalidate" para todo lo del mismo origen. */
-var CACHE = "kaleo-v1";
+var CACHE = "kaleo-v2";
 var CORE = [
   "index.html", "habitaciones.html", "nava.html", "nosotros.html",
   "ofertas.html", "ubicacion.html", "reservar.html", "privacidad.html",

@@ -204,6 +204,7 @@
     "Almuerzo y cena": "Lunch and dinner",
     "Cafetería": "Café",
     "De la huerta a la mesa": "From the garden to the table",
+    "Una semana en la carta": "A week on the menu",
     "La carta cambia con lo que hay. Esto es una muestra de una semana cualquiera.":
       "The menu changes with what's available. This is a sample from any given week.",
     "Abierto también al público, con reserva.": "Also open to the public, by reservation.",

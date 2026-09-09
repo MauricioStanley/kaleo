@@ -27,7 +27,8 @@
   }
 
   /* ---------- Barra fija de reserva (aparece al hacer scroll) ---------- */
-  if (!document.querySelector(".stickybar")) {
+  /* En la propia página de reserva sería redundante con el motor. */
+  if (!document.querySelector(".stickybar") && !document.getElementById("wizard")) {
     var fmt = function (d) { return d.toISOString().slice(0, 10); };
     var t1 = new Date(); t1.setDate(t1.getDate() + 1);
     var t2 = new Date(); t2.setDate(t2.getDate() + 2);

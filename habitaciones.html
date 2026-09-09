@@ -88,7 +88,7 @@
     return '' +
     '<div class="split' + rev + ' reveal" id="' + r.id + '" style="margin-bottom:clamp(48px,9vh,96px)">' +
       '<div class="split__media reveal-img">' +
-        '<img src="' + r.img + '" alt="' + r.name + '">' +
+        '<img src="' + r.img + '" alt="' + r.name + '" loading="lazy" decoding="async">' +
         '<span class="tag">' + r.view + '</span>' +
       '</div>' +
       '<div class="split__body">' +
