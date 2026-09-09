@@ -395,7 +395,9 @@ body.nav-open .burger span:nth-child(3) { transform: translateY(-8px) rotate(-45
 @keyframes heroIn { to { opacity: 1; transform: none; } }
 .hero::after {
   content: ""; position: absolute; inset: 0; z-index: 1;
-  background: linear-gradient(180deg, rgba(20,26,18,.44) 0%, rgba(20,26,18,.05) 34%, rgba(20,26,18,.3) 64%, rgba(15,20,13,.82) 100%);
+  background:
+    linear-gradient(180deg, rgba(18,24,16,.5) 0%, rgba(18,24,16,.12) 28%, rgba(16,22,14,.52) 66%, rgba(11,16,9,.9) 100%),
+    linear-gradient(90deg, rgba(13,19,11,.5) 0%, rgba(13,19,11,0) 58%);
 }
 .hero__inner { max-width: 730px; position: relative; z-index: 2; }
 .hero h1 { color: #fff; margin: 0 0 var(--s-5); text-shadow: 0 2px 30px rgba(0,0,0,.28); }
@@ -600,8 +602,9 @@ body.nav-open .burger span:nth-child(3) { transform: translateY(-8px) rotate(-45
 }
 
 /* ---------- Ofertas ---------- */
+.offers-list { display: grid; gap: clamp(22px, 3vw, 34px); }
 .offer {
-  display: grid; grid-template-columns: 1.1fr 1fr;
+  display: grid; grid-template-columns: 1.15fr 1fr;
   border-radius: var(--r-lg); overflow: hidden;
   background: var(--surface);
   box-shadow: var(--shadow-2);
@@ -687,10 +690,11 @@ body.nav-open .burger span:nth-child(3) { transform: translateY(-8px) rotate(-45
 
 .rate-room {
   border-radius: var(--r-lg); overflow: hidden;
-  margin-bottom: var(--s-5); display: grid; grid-template-columns: 250px 1fr;
+  margin-bottom: var(--s-5); display: grid; grid-template-columns: 280px 1fr;
+  align-items: start;
   background: var(--surface); box-shadow: var(--shadow-2);
 }
-.rate-room > img { width: 100%; height: 100%; object-fit: cover; min-height: 220px; }
+.rate-room > img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
 .rate-room__body { padding: var(--s-6); }
 .rate-room__body h3 { font-size: 1.3rem; }
 .rate-option {
@@ -701,7 +705,7 @@ body.nav-open .burger span:nth-child(3) { transform: translateY(-8px) rotate(-45
 .rate-option small { color: var(--ink-3); }
 .rate-option .price b { font-family: var(--font-display); font-size: 1.25rem; font-weight: 500; color: var(--terra); }
 .rate-option input { accent-color: var(--sage); }
-@media (max-width: 640px) { .rate-room { grid-template-columns: 1fr; } .rate-room > img { min-height: 180px; } }
+@media (max-width: 640px) { .rate-room { grid-template-columns: 1fr; } .rate-room > img { aspect-ratio: 16 / 10; } }
 
 .summary {
   position: sticky; top: 92px;
