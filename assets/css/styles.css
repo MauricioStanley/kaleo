@@ -70,8 +70,6 @@
 *, *::before, *::after { box-sizing: border-box; }
 * { margin: 0; }
 html { -webkit-text-size-adjust: 100%; scroll-padding-top: 92px; }
-/* Contiene el menú móvil fuera de pantalla sin romper position:sticky. */
-html { overflow-x: hidden; overflow-x: clip; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {
@@ -292,18 +290,24 @@ ul.stack > li::before {
   position: relative; padding: 6px 0;
   transition: color .3s var(--ease);
 }
-.nav > a::after {
+/* Subrayado sólo para los enlaces de texto, no para el botón .nav__cta:
+   sobre el botón, el ::after de .btn (inset:0) haría que este recuadro
+   ocupara todo el botón y tapara el texto al pasar el ratón / en la
+   página activa. */
+.nav > a:not(.nav__cta)::after {
   content: ""; position: absolute; left: 0; bottom: 0;
   width: 100%; height: 1px; background: currentColor;
   transform: scaleX(0); transform-origin: right;
   transition: transform .32s var(--ease);
 }
-.nav > a:hover::after,
-.nav > a[aria-current="page"]::after { transform: scaleX(1); transform-origin: left; }
+.nav > a:not(.nav__cta):hover::after,
+.nav > a:not(.nav__cta)[aria-current="page"]::after { transform: scaleX(1); transform-origin: left; }
 .nav > a[aria-current="page"] { color: var(--sage-soft); }
 .site-header.is-solid .nav > a[aria-current="page"],
 .site-header--inner .nav > a[aria-current="page"] { color: var(--sage); }
-.nav__cta { margin-left: 4px; }
+/* .nav > a fija padding: 6px 0; el botón necesita el suyo propio
+   (selector más específico para ganarle). */
+.nav > a.nav__cta { margin-left: 8px; padding: .82em 1.5em; }
 
 /* Selector de idioma */
 .lang {
@@ -347,10 +351,14 @@ body.nav-open .burger span:nth-child(3) { transform: translateY(-8px) rotate(-45
     position: fixed; inset: 0; z-index: 110;
     flex-direction: column; justify-content: center; gap: 24px;
     background: var(--forest);
-    transform: translateX(100%);
-    transition: transform .45s var(--ease-out);
+    /* Cerrado: recortado dentro del viewport (sin desbordar y provocar
+       scroll horizontal, como haría transform: translateX(100%)).
+       Unidades en % en los cuatro lados para que clip-path pueda animar. */
+    clip-path: inset(0% 0% 0% 100%);
+    visibility: hidden; opacity: 0;
+    transition: clip-path .42s var(--ease-out), opacity .3s var(--ease-out), visibility .42s;
   }
-  body.nav-open .nav { transform: translateX(0); }
+  body.nav-open .nav { clip-path: inset(0% 0% 0% 0%); visibility: visible; opacity: 1; }
   .nav > a { color: #fff !important; font-size: 1.05rem; }
   .nav__cta { margin-top: 8px; }
   .lang { margin: 4px 0 0; color: #fff; }
